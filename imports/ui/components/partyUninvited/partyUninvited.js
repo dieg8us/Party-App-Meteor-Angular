@@ -8,6 +8,7 @@ import { name as UninvitedFilter } from '../../filters/uninvitedFilter';
 import { name as DisplayNameFilter } from '../../filters/displayNameFilter';
 
 class PartyUninvited {
+  // constructor of class PartyUninvited
   constructor($scope) {
     'ngInject';
 
@@ -19,12 +20,24 @@ class PartyUninvited {
       }
     });
   }
+
+  // method to invite user
+  invite(user) {
+    Meteor.call('invite', this.party._id, user._id,
+      (error) => {
+        if(error) {
+          console.log('Oops, unable to invite!');
+        } else {
+          console.log('Invited');
+        }
+      }
+    );
+  }
 }
 
 const name = 'partyUninvited';
 
-// module
-
+// export module
 export default angular.module(name, [
   angularMeteor,
   UninvitedFilter,

@@ -11,6 +11,9 @@ import { name as PartiesSort } from '../partiesSort/partiesSort';
 import { name as PartyAdd } from '../partyAdd/partyAdd';
 import { name as PartyRemove } from '../partyRemove/partyRemove';
 import { name as PartyCreator } from '../partyCreator/partyCreator';
+import { name as PartyRsvp } from '../partyRsvp/partyRsvp';
+import { name as PartyRsvpList } from '../partyRsvpList/partyRsvpList';
+import { name as PartyUnanswered } from '../partyUnanswered/partyUnanswered';
 
 class PartiesList {
   constructor($scope, $reactive) {
@@ -31,6 +34,8 @@ class PartiesList {
       sort: this.getReactively('sort')
     }, this.getReactively('searchText')
     ]);
+
+    this.subscribe('users');
 
     this.helpers({
       parties() {
@@ -63,7 +68,10 @@ export default angular.module(name, [
   PartiesSort,
   PartyAdd,
   PartyRemove,
-  PartyCreator
+  PartyCreator,
+  PartyRsvp,
+  PartyRsvpList,
+  PartyUnanswered
 ]).component(name, {
   template,
   controllerAs: name,

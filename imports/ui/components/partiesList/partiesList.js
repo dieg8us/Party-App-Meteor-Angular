@@ -8,12 +8,13 @@ import { Counts } from 'meteor/tmeasday:publish-counts';
 import template from './partiesList.html';
 import { Parties } from '../../../api/parties/index';
 import { name as PartiesSort } from '../partiesSort/partiesSort';
+import { name as PartiesMap } from '../partiesMap/partiesMap';
+import { name as PartyAddButton } from '../partyAddButton/partyAddButton';
 import { name as PartyAdd } from '../partyAdd/partyAdd';
 import { name as PartyRemove } from '../partyRemove/partyRemove';
 import { name as PartyCreator } from '../partyCreator/partyCreator';
 import { name as PartyRsvp } from '../partyRsvp/partyRsvp';
-import { name as PartyRsvpList } from '../partyRsvpList/partyRsvpList';
-import { name as PartyUnanswered } from '../partyUnanswered/partyUnanswered';
+import { name as PartyRsvpsList } from '../partyRsvpsList/partyRsvpsList';
 
 class PartiesList {
   constructor($scope, $reactive) {
@@ -45,8 +46,18 @@ class PartiesList {
       },
       partiesCount() {
         return Counts.get('numberOfParties');
+      },
+      isLoggedIn() {
+        return !!Meteor.userId();
+      },
+      currentUserId() {
+        return Meteor.userId();
       }
     });
+  }
+
+  isOwner(party) {
+    return this.isLoggedIn && party.owner === this.currentUserId;
   }
 
   pageChanged(newPage) {
@@ -66,12 +77,13 @@ export default angular.module(name, [
   uiRouter,
   utilsPagination,
   PartiesSort,
+  PartiesMap,
+  PartyAddButton,
   PartyAdd,
   PartyRemove,
   PartyCreator,
   PartyRsvp,
-  PartyRsvpList,
-  PartyUnanswered
+  PartyRsvpsList
 ]).component(name, {
   template,
   controllerAs: name,

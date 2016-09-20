@@ -12,13 +12,22 @@ class PartyRsvp {
   yes() {
     this.answer('yes');
   }
+  isYes() {
+    return this.isAnswer('yes');
+  }
   // method maybe
   maybe() {
     this.answer('maybe');
   }
+  isMaybe() {
+    return this.isMaybe('maybe');
+  }
   // method no
   no() {
     this.answer('no');
+  }
+  isNo() {
+    return this.isNo('no');
   }
 
   answer(answer) {
@@ -29,6 +38,14 @@ class PartyRsvp {
         console.log('RSVP done!');
       }
     });
+  }
+  isAnswer(answer) {
+    if(this.party) {
+      return !!_.findWhere(this.party.rsvps, {
+        user: Meteor.userId(),
+        rsvp: answer
+      });
+    }
   }
 }
 
